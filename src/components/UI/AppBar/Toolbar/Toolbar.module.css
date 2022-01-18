@@ -1,0 +1,102 @@
+.Toolbar {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+  background-color: #1D1D1F;
+  z-index: 90;
+  height: 100px;
+  margin-bottom: 0;
+}
+
+
+
+.logoText {
+  font-style: italic;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 22px;
+  color: #FFF;
+  margin-left: 10px
+}
+
+.Toolbar nav {
+  height: 100%;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+}
+
+.logoActive {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.logoNotActive {
+  position: static;
+}
+
+@media screen and (min-width: 768px) {
+  .toolbarActive {
+    height: 56px;
+  }
+
+
+  .logoActive {
+    position: static;
+  }
+
+  .header__links {
+    padding: 16px 0;
+  }
+
+}
+
+
+.AppLogo {
+  height: 40px;
+  width: 40px;
+  pointer-events: none;
+  margin-right: auto;
+}
+
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.header__logo {
+  display: flex;
+  width: 40%;
+  align-items: center;
+  justify-content: left;
+  padding: 15px 0 15px 10px;
+}
+
+.header__links {
+  width: 100%;
+}
+
+
+
+
+

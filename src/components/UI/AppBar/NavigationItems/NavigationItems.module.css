@@ -1,0 +1,50 @@
+.NavigationItems{
+  display: none;
+}
+
+@media screen and (min-width: 768px) {
+  .burger {
+    display: none;
+  }
+
+  .NavigationItems {
+    margin: 0;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 100%;
+    text-align: center;
+  }
+
+  .activeBlock, .noActive {
+    display: flex;
+  }
+  .NavigationItems .inputSearch input  {
+    font-size: 14px;
+    line-height: 16px;
+  }
+}
+
+
+@media screen and (min-width: 880px) {
+  .inputSearch input {
+    font-size: 18px;
+    line-height: 22px;
+  }
+}
+
+.inputSearch input {
+  font-family: "Montserrat", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 22px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.inputSearch input {
+  padding: 10px 0 10px 10px;
+  width: 100%;
+}
+
+

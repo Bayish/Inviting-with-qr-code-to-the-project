@@ -1,0 +1,48 @@
+.Modal {
+  position: fixed;
+  z-index: 500;
+  width: 80%;
+  bottom: -4%;
+  right: 10%;
+  height: 65%;
+  box-sizing: border-box;
+  transition: all 0.3s ease-out;
+}
+
+@media screen and (min-width: 508px) {
+  .Modal {
+    bottom: 1%;
+  }
+}
+
+@media screen and (min-width: 630px) {
+  .Modal {
+    bottom: 9%;
+  }
+}
+
+@media screen and (min-width: 750px) {
+  .Modal {
+    bottom: 20%;
+    right: 12%;
+  }
+}
+
+@media screen and (min-width: 900px) {
+  .Modal {
+    bottom: 25%;
+    right: 11%;
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  .Modal {
+    right: 6%;
+  }
+}
+
+@media screen and (min-width: 1150px) {
+  .Modal {
+    right: 0;
+  }
+}

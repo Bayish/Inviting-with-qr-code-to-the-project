@@ -16,7 +16,7 @@ const AuthPage = () => {
 
   useEffect(() => {
     dispatch(logInUserFailure(null));
-  }, [])
+  }, [dispatch])
 
 
   return (

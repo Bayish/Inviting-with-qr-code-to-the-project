@@ -12,7 +12,7 @@ import {
   fetchGalleryFailure,
   createGalleryRequest,
   createGallerySuccess,
-  createGalleryFailure
+  changeGallerySuccess, changeGalleryFailure, changeGalleryRequest, createGalleryFailure
 } from "../actions/galleriesActions";
 import {historyPush} from "../actions/historyActions";
 import {toast} from "react-toastify";
@@ -23,11 +23,11 @@ export function* fetchGalleriesSaga() {
     const {data} = yield axiosApi.get('/gallery');
     yield put(fetchGalleriesSuccess(data));
   } catch (err) {
-    console.log(err)
     if (!err.response) toast.error(err.message);
     yield put(fetchGalleriesFailure(err.response?.data));
   }
 }
+
 export function* fetchGallerySaga({payload: id}) {
   try {
     const {data} = yield axiosApi.get('/gallery/get/' + id);
@@ -38,30 +38,11 @@ export function* fetchGallerySaga({payload: id}) {
     yield put(fetchGalleryFailure(err.response?.data));
   }
 }
+
 export function* createGallerySaga({payload: galleryData}) {
   try {
-    const requestOptions = {
-      method: 'POST',
-      body: galleryData
-    };
-    fetch('http://3.109.39.82/gallery/create', requestOptions)
-      .then(async response => {
-        const isJson = response.headers.get('content-type')?.includes('application/json');
-        const data = isJson && await response.json();
-
-        if (!response.ok) {
-          const error = (data && data.message) || response.status;
-          createGalleryFailure(error)
-          return Promise.reject(error);
-        }
-
-        historyPush('/');
-
-        createGallerySuccess(data)
-      })
-      .catch(error => {
-        console.error('Error while uploading file!', error);
-      });
+    const {data} = yield axiosApi.post('/gallery/create', galleryData, {headers: {'content-type': "application/json"}});
+    yield put(createGallerySuccess(data));
     yield put(historyPush('/'));
     toast.success('You have created successful');
   } catch (err) {
@@ -84,7 +65,18 @@ export function* removeGallerySaga({payload: id}) {
   }
 }
 
-
+export function* changeGallerySaga({payload}) {
+  try {
+    const {data} = yield axiosApi.post('/gallery/put', payload.data, {headers: {'content-type': "application/json"}});
+    yield put(changeGallerySuccess(data));
+    yield put(historyPush('/'));
+    toast.success('You have changed successful');
+  } catch (err) {
+    if (!err.response) toast.error(err.message);
+    if (err.response?.data?.global) toast.error(err.response?.data?.global);
+    yield put(changeGalleryFailure(err.response?.data));
+  }
+}
 
 
 const galleriesSagas = [
@@ -92,6 +84,7 @@ const galleriesSagas = [
   takeEvery(fetchGalleryRequest, fetchGallerySaga),
   takeEvery(createGalleryRequest, createGallerySaga),
   takeEvery(removeGalleryRequest, removeGallerySaga),
+  takeEvery(changeGalleryRequest, changeGallerySaga),
 ];
 
 export default galleriesSagas;

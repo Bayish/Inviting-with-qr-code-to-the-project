@@ -9,6 +9,8 @@ export const initialState = {
   fetchSingleError: null,
   createLoading: false,
   createError: null,
+  changeLoading: false,
+  changeError: null,
   removeLoading: false,
   removeError: null,
   galleries: [],
@@ -70,6 +72,19 @@ const galleriesSlice = createSlice({
     removeGalleryFailure(state, {payload: error}){
       state.removeLoading = false;
       state.removeError = error;
+    },
+    changeGalleryRequest(state){
+      state.changeLoading = true;
+      state.changeError = null;
+    },
+    changeGallerySuccess(state, {payload: updatedGallery}){
+      state.changeLoading = false;
+      state.changeError = null;
+      state.galleries = state.galleries.map(g => g.id === updatedGallery.id ? updatedGallery : g);
+    },
+    changeGalleryFailure(state, {payload: error}){
+      state.changeLoading = false;
+      state.changeError = error;
     }
   }
 });

@@ -12,5 +12,8 @@ export const {
   fetchGalleryFailure,
   createGalleryRequest,
   createGallerySuccess,
-  createGalleryFailure
+  createGalleryFailure,
+  changeGallerySuccess,
+  changeGalleryFailure,
+  changeGalleryRequest
 } = galleriesSlice.actions;

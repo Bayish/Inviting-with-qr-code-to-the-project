@@ -4,8 +4,9 @@ import {CircularProgress, Grid} from "@mui/material";
 import FormElement from "../UI/Form/FormElement";
 import ButtonWithProgress from "../UI/ButtonWithProgress/ButtonWithProgress";
 import FileInput from '../UI/FileInput/FileInput';
-import {createGalleryRequest} from "../../store/actions/galleriesActions";
+import {changeGalleryRequest} from "../../store/actions/galleriesActions";
 import {useDispatch, useSelector} from "react-redux";
+import {useHistory} from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -16,16 +17,28 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const GalleryForm = ({loading}) => {
+const GalleryForm = ({match}) => {
+  const history = useHistory();
   const classes = useStyles();
   const dispatch = useDispatch();
-  const {createLoading} = useSelector(state => state.galleries)
+
+  const {changeLoading, galleries} = useSelector(state => state.galleries);
+
+  let current;
+  for (let gallery of galleries) {
+    if (gallery.id === match.params.id) {
+      current = gallery;
+    }
+  }
+
   const [state, setState] = useState({
-    name: "",
+    name: current?.name,
   });
-  const [files, setFiles] = useState('');
+  const [files, setFiles] = useState(current?.files);
 
-
+  if(galleries < 1){
+     history.push('/');
+  }
 
 
   const inputChangeHandler = e => {
@@ -50,16 +63,16 @@ const GalleryForm = ({loading}) => {
     for (let i = 0; i < files.length; i++) {
       formData.append(`files`, files[i])
     }
-    dispatch(createGalleryRequest(formData))
+    dispatch(changeGalleryRequest({data: formData, id: match.params.id}));
   };
 
-  return createLoading ? (
+  return changeLoading ? (
     <Grid container justifyContent="center" alignItems="center">
       <Grid item>
         <CircularProgress/>
       </Grid>
     </Grid>
-  ):(
+  ) : (
     <Grid
       container
       item
@@ -78,7 +91,7 @@ const GalleryForm = ({loading}) => {
           required
           label="Name"
           name="name"
-          value={state.title}
+          value={state.name}
           onChange={inputChangeHandler}
         />
         <FileInput onChange={uploadFileHandler}/>
@@ -89,8 +102,8 @@ const GalleryForm = ({loading}) => {
             variant="contained"
             color="primary"
             className={classes.submit}
-            loading={loading}
-            disabled={loading}
+            loading={changeLoading}
+            disabled={changeLoading}
           >
             Create
           </ButtonWithProgress>

@@ -5,6 +5,7 @@ import Main from './containers/MainPages/Main/Main';
 import AuthPage from './containers/MainPages/AuthPage/AuthPage';
 import Home from "./containers/MainPages/Home/Home";
 import GalleryForm from "./components/GalleryForm/GalleryForm";
+import ChangeGalleryForm from "./components/ChangeGalleryForm/ChangeGalleryForm";
 
 
 const App = () => {
@@ -15,6 +16,7 @@ const App = () => {
         <Route path="/gallery/:id" exact component={Main}/>
         <Route path="/" exact component={Home}/>
         <Route path="/create/:id" exact component={GalleryForm}/>
+        <Route path="/change/:id" exact component={ChangeGalleryForm}/>
         <Route path="/create" exact component={GalleryForm}/>
         <Route path="/login" component={AuthPage}/>
         <Route render={() => <h1>Not found</h1>}/>

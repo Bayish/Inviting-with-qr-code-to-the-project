@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 import c from './Toolbar.module.css';
 
 const Toolbar = () => {
-  const [open, setOpen] = useState(false);
+  const [open] = useState(false);
 
   return (
     <header>

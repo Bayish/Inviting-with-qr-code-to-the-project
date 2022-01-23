@@ -1,6 +1,7 @@
-import {Card, CardHeader, CardMedia, Grid, Typography} from "@mui/material";
+import {Card, CardMedia } from "@mui/material";
 import { makeStyles} from '@mui/styles';
-import {BASE_URL} from "../../config";
+import ReactPlayer from 'react-player'
+import './responsive.css';
 
 const useStyles = makeStyles({
     card: {
@@ -12,23 +13,44 @@ const useStyles = makeStyles({
     }
 })
 
-const GalleryItem = ({name, image, date}) => {
+const GalleryItem = ({name, image, setId, id}) => {
     const classes = useStyles();
 
+    let video;
     if (image) {
-      image ='http://3.109.39.82/file/' + image;
+      const format = image.split('.');
+      if(format[1] === 'mp4'){
+         video = 'http://3.109.39.82/file/' + image;
+        console.log(video)
+      }
+       image ='http://3.109.39.82/file/' + image;
+    }
+
+    const onHandleClick = (id) => {
+      setId(id + 1)
     }
 
     return (
         <>
-            <Card className={classes.card}>
-                <CardMedia
-                    image={image}
-                    title={name}
-                    className={classes.media}
-                />
+          {!video ? (
+            <Card className={classes.card} onClick={() => onHandleClick(id)}>
+              <CardMedia
+                image={image}
+                title={name}
+                className={classes.media}
+              />
             </Card>
-          <Typography>{date}</Typography>
+          ) : (
+            <div className='player-wrapper'>
+              <ReactPlayer
+                className='react-player'
+                url={video}
+                width='100%'
+                height='100%'
+                controls={true}
+              />
+            </div>
+          )}
         </>
     )
 };

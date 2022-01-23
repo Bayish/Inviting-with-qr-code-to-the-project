@@ -6,6 +6,7 @@ import {fetchGalleriesRequest, removeGalleryRequest} from "../../../store/action
 import {Link as RouterLink} from "react-router-dom";
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import DeleteIcon from '@mui/icons-material/Delete';
+import SettingsApplicationsIcon from '@mui/icons-material/SettingsApplications';
 
 const useStyles = makeStyles(theme => ({
   title: {
@@ -33,8 +34,6 @@ const Home = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const {fetchLoading, galleries} = useSelector(state => state.galleries);
-
-  console.log(galleries)
 
   useEffect(() => {
     dispatch(fetchGalleriesRequest());
@@ -66,6 +65,7 @@ const Home = () => {
               <Typography>{g.createdDate}</Typography>
               <Grid item container justifyContent="space-between" xs={12} lg={4} mt={2}>
                 <Button  variant="contained" component={Link} href={"http://3.109.39.82:8080/gallery/qr/generate/" + g.id} download>Generate Qr Code</Button>
+                <Button component={RouterLink} to={'/change/' + g.id}><SettingsApplicationsIcon/></Button>
                 <Button onClick={() => dispatch(removeGalleryRequest(g.id))}><DeleteIcon/></Button>
                 <Button component={RouterLink} to={`/gallery/${g.galleryCode}`}><ArrowForwardIcon/></Button>
               </Grid>

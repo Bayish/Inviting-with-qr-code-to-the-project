@@ -4,21 +4,21 @@ import history from "../../history";
 
 export function* historyPushSaga({payload}) {
   try {
-    history.push(payload)
+    yield history.push(payload)
   } catch (err) {
     console.log('historyPushSaga error');
   }
 }
 export function* historyReplaceSaga({payload}) {
   try {
-    history.replace(payload)
+    yield history.replace(payload)
   } catch (err) {
     console.log('historyReplaceSaga error');
   }
 }
 export function* historyBackSaga() {
   try {
-    history.goBack();
+    yield history.goBack();
   } catch (err) {
     console.log('historyBackSaga error');
   }

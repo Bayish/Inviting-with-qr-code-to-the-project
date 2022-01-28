@@ -106,7 +106,7 @@ const GalleryForm = ({match}) => {
             loading={changeLoading}
             disabled={changeLoading}
           >
-            Create
+            Change
           </ButtonWithProgress>
         </Grid>
       </form>

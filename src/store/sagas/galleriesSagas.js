@@ -65,9 +65,9 @@ export function* removeGallerySaga({payload: id}) {
   }
 }
 
-export function* changeGallerySaga({payload}) {
+export function* changeGallerySaga({payload : formData}) {
   try {
-    const {data} = yield axiosApi.post('/gallery/put', payload.data, {headers: {'content-type': "application/json"}});
+    const {data} = yield axiosApi.put('/gallery/update' , formData, {headers: {'content-type': "application/json"}});
     yield put(changeGallerySuccess(data));
     yield put(historyPush('/'));
     toast.success('You have changed successful');

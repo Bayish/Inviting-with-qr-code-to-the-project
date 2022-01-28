@@ -59,11 +59,12 @@ const GalleryForm = ({match}) => {
     const formData = new FormData();
 
     formData.append('name', state.name)
+    formData.append('id', match.params.id)
 
     for (let i = 0; i < files.length; i++) {
       formData.append(`files`, files[i])
     }
-    dispatch(changeGalleryRequest({data: formData, id: match.params.id}));
+    dispatch(changeGalleryRequest(formData));
   };
 
   return changeLoading ? (

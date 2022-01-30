@@ -38,9 +38,18 @@ store.subscribe(() => {
 sagaMiddleware.run(rootSagas);
 
 
+function authHeader(){
+  const user = store.getState().users?.user;
+
+  if(user && user.accessToken){
+    return {'Authorization': "Bearer " + user.accessToken};
+  }else{
+    return {};
+  }
+}
 axiosApi.interceptors.request.use(config => {
   try {
-    config.headers['Authorization'] = `Bearer ${store.getState().users?.user?.accessToken}`
+    config.headers = authHeader();
   } catch (e) {}
   return config;
 });

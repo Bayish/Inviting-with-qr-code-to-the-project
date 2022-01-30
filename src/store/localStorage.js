@@ -1,6 +1,6 @@
 export const saveToLocalStorage = state => {
   try {
-    localStorage.setItem('ProfileState', JSON.stringify(state));
+    localStorage.setItem('QrCodeState', JSON.stringify(state));
   } catch (err) {
     console.log('Could not save state');
   }
@@ -8,7 +8,7 @@ export const saveToLocalStorage = state => {
 
 export const loadFromLocalStorage = () => {
   try {
-    const loadedState = localStorage.getItem('ProfileState');
+    const loadedState = localStorage.getItem('QrCodeState');
 
     if (loadedState === null) {
       return undefined;

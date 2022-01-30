@@ -22,6 +22,7 @@ const Main = ({match}) => {
   const [id, setId] = useState(0);
   const dispatch = useDispatch();
   const {gallery, fetchSingleLoading} = useSelector(state => state.galleries);
+  const {user} = useSelector(state => state.users);
   const purchaseCloseHandler = () => {
     setId(0)
   }
@@ -76,6 +77,7 @@ const Main = ({match}) => {
                         fileName={c.fileName}
                         date={gallery.createdDate}
                         setId={setId}
+                        user={user}
                         id={i}
                       />
                     </Grid>

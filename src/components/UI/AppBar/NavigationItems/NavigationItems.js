@@ -9,10 +9,12 @@ const NavigationItems = () => {
     <>
       <div className={`${c.NavigationItems} ${c.activeBlock}`}>
         <NavigationItem to='/' exact>Главная</NavigationItem>
+        <NavigationItem to='/login'>Login</NavigationItem>
       </div>
       <div className={c.burger}>
         <BurgerMenu>
           <NavigationItem to='/' exact>Главная</NavigationItem>
+          <NavigationItem to='/login'>Login</NavigationItem>
         </BurgerMenu>
       </div>
     </>

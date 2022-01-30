@@ -3,7 +3,7 @@ import {CircularProgress, Grid, Typography} from "@mui/material";
 import {makeStyles} from '@mui/styles';
 import GalleryItem from "../../../components/GalleryItem/GalleryItem";
 import {useDispatch, useSelector} from 'react-redux';
-import {fetchGalleryRequest} from "../../../store/actions/galleriesActions";
+import {fetchGalleryRequest, removePhotoRequest} from "../../../store/actions/galleriesActions";
 import Modal from "../../../components/UI/Modal/Modal";
 import ReactPlayer from "react-player";
 import '../../../components/GalleryItem/responsive.css';
@@ -43,6 +43,10 @@ const Main = ({match}) => {
     }
   }
 
+  const removeHandler = data => {
+    dispatch(removePhotoRequest({galleryId: gallery.id, fileName: data, paramsId: match.params.id}));
+  }
+
   return (
     <Grid container direction="column" spacing={2} className="container">
       <Grid item>
@@ -67,8 +71,9 @@ const Main = ({match}) => {
                   gallery?.files?.map((c, i) => (
                     <Grid key={i} item xs={12} sm={12} md={6} lg={4}>
                       <GalleryItem
+                        removeHandler={removeHandler}
                         name={gallery.name}
-                        image={c.fileName}
+                        fileName={c.fileName}
                         date={gallery.createdDate}
                         setId={setId}
                         id={i}

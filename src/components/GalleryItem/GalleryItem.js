@@ -1,7 +1,8 @@
-import {Card, CardMedia } from "@mui/material";
+import {Card, CardMedia, Button } from "@mui/material";
 import { makeStyles} from '@mui/styles';
 import ReactPlayer from 'react-player'
 import './responsive.css';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const useStyles = makeStyles({
     card: {
@@ -13,32 +14,35 @@ const useStyles = makeStyles({
     }
 })
 
-const GalleryItem = ({name, image, setId, id}) => {
+const GalleryItem = ({removeHandler, fileName, name, setId, id}) => {
     const classes = useStyles();
+    console.log(fileName)
 
     let video;
-    if (image) {
-      const format = image.split('.');
+    let image;
+    if (fileName) {
+      const format = fileName.split('.');
       if(format[1] === 'mp4'){
-         video = 'http://3.109.39.82/file/' + image;
-        console.log(video)
+         video = 'http://3.109.39.82/file/' + fileName;
       }
-       image ='http://3.109.39.82/file/' + image;
+       image ='http://3.109.39.82/file/' + fileName;
     }
 
     const onHandleClick = (id) => {
       setId(id + 1)
     }
 
-    return (
+    return fileName && (
         <>
           {!video ? (
-            <Card className={classes.card} onClick={() => onHandleClick(id)}>
+            <Card className={classes.card} >
               <CardMedia
                 image={image}
                 title={name}
                 className={classes.media}
+                onClick={() => onHandleClick(id)}
               />
+              <Button fullWidth variant="contained" color="primary" onClick={() => removeHandler(fileName)}><DeleteIcon/></Button>
             </Card>
           ) : (
             <div className='player-wrapper'>
@@ -49,6 +53,7 @@ const GalleryItem = ({name, image, setId, id}) => {
                 height='100%'
                 controls={true}
               />
+              <Button fullWidth variant="contained" color="primary" onClick={() => removeHandler(fileName)}><DeletIcon/></Button>
             </div>
           )}
         </>

@@ -12,7 +12,13 @@ import {
   fetchGalleryFailure,
   createGalleryRequest,
   createGallerySuccess,
-  changeGallerySuccess, changeGalleryFailure, changeGalleryRequest, createGalleryFailure
+  changeGallerySuccess,
+  changeGalleryFailure,
+  changeGalleryRequest,
+  createGalleryFailure,
+  removePhotoRequest,
+  removePhotoSuccess,
+  removePhotoFailure
 } from "../actions/galleriesActions";
 import {historyPush} from "../actions/historyActions";
 import {toast} from "react-toastify";
@@ -78,6 +84,17 @@ export function* changeGallerySaga({payload : formData}) {
   }
 }
 
+export function* removeFileSaga({payload}){
+  try{
+    yield axiosApi.delete('/gallery/file?galleryId=' + payload.galleryId + '&fileName=' + payload.fileName);
+    yield put(removePhotoSuccess(payload.fileName));
+    yield put(historyPush('/'));
+    toast.success('You have successful removed')
+  }catch(e){
+    yield put(removePhotoFailure(e.response?.data))
+  }
+}
+
 
 const galleriesSagas = [
   takeEvery(fetchGalleriesRequest, fetchGalleriesSaga),
@@ -85,6 +102,7 @@ const galleriesSagas = [
   takeEvery(createGalleryRequest, createGallerySaga),
   takeEvery(removeGalleryRequest, removeGallerySaga),
   takeEvery(changeGalleryRequest, changeGallerySaga),
+  takeEvery(removePhotoRequest, removeFileSaga),
 ];
 
 export default galleriesSagas;

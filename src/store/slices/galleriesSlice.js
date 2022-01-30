@@ -13,6 +13,8 @@ export const initialState = {
   changeError: null,
   removeLoading: false,
   removeError: null,
+  removePhotoLoading: false,
+  removePhotoError: null,
   galleries: [],
   gallery: null,
 };
@@ -85,6 +87,18 @@ const galleriesSlice = createSlice({
     changeGalleryFailure(state, {payload: error}){
       state.changeLoading = false;
       state.changeError = error;
+    },
+    removePhotoRequest(state){
+      state.removePhotoLoading = true;
+      state.removePhotoError = null;
+    },
+    removePhotoSuccess(state, {payload}){
+      state.removePhotoLoading = false;
+      state.gallery = state.gallery?.files.filter(g => g.fileName !== payload);
+    },
+    removePhotoFailure(state, {payload: error}){
+      state.removePhotoLoading = false;
+      state.removePhotoError = error;
     }
   }
 });

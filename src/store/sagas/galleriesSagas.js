@@ -60,7 +60,7 @@ export function* createGallerySaga({payload: galleryData}) {
 
 export function* removeGallerySaga({payload: id}) {
   try {
-    yield axios.delete('http://3.109.39.82:8080/gallery/' + id);
+    yield axiosApi.delete('/gallery/' + id);
     yield put(removeGallerySuccess(id));
     yield put(historyPush('/'));
     toast.success('You have changed successful');

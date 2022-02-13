@@ -1,25 +1,36 @@
 # pull official base image
-FROM node:17.4-alpine3.14
+FROM node:17.4-alpine3.14 as build-stage
+
+# Stage 1
+# Build docker image of react app
 
 # set working directory
-WORKDIR /app
+RUN mkdir /usr/app
+#copy all files from current directory to docker
+COPY . /usr/app
 
-# add `/app/node_modules/.bin` to $PATH
-ENV PATH /app/node_modules/.bin:$PATH
+WORKDIR /usr/app
 
-# install app dependencies
-COPY package.json ./
-COPY package-lock.json ./
+# install and cache app dependencies
+RUN yarn
 
-# add app
-COPY ./ ./
+# add `/usr/src/app/node_modules/.bin` to $PATH
+ENV PATH /usr/src/app/node_modules/.bin:$PATH
 
-# start app
-RUN npm i
-CMD ["npm", "run", "start"]
-#WORKDIR /app
-#COPY package.json ./
-#COPY package-lock.json ./
-#COPY ./ ./
-#RUN npm i
-#CMD ["npm", "run", "start"]
+RUN npm run build
+
+# Stage 2
+# Copy the react app build above in nginx
+FROM nginx:alpine
+
+# Set working directory to nginx asset directory
+WORKDIR /usr/share/nginx/html
+
+# Remove default nginx static assets
+RUN rm -rf ./*
+
+# Copy static assets from builder stage
+COPY --from=build-stage /usr/app/build .
+
+# Containers run nginx with global directives and daemon off
+ENTRYPOINT ["nginx", "-g", "daemon off;"]

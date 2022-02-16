@@ -22,9 +22,9 @@ const GalleryItem = ({name, setId, id,  user, removeHandler, fileName}) => {
     if (typeof fileName !== 'undefined') {
       const format = fileName.split('.');
       if(format[1] === 'mp4'){
-         video = 'http://3.111.156.110/file/' + fileName;
+         video = 'https://sferakg.ru/file/' + fileName;
       }else{
-        image ='http://3.111.156.110/file/' + fileName;
+        image ='https://sferakg.ru/file/' + fileName;
       }
     }
 

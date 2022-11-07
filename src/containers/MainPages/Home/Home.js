@@ -7,6 +7,7 @@ import {Link as RouterLink} from "react-router-dom";
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SettingsApplicationsIcon from '@mui/icons-material/SettingsApplications';
+import {BASE_URL} from "../../../config";
 
 const useStyles = makeStyles(theme => ({
   title: {
@@ -64,7 +65,7 @@ const Home = () => {
               <Typography>{g.name}</Typography>
               <Typography>{g.createdDate}</Typography>
               <Grid item container justifyContent="space-between" xs={12} lg={4} mt={2}>
-                <Button  variant="contained" component={Link} href={"https://backend.sferakg.ru/gallery/qr/generate/" + g.id} download>Generate Qr Code</Button>
+                <Button  variant="contained" component={Link} href={BASE_URL+"gallery/qr/generate/" + g.id} download>Generate Qr Code</Button>
                 <Button component={RouterLink} to={'/change/' + g.id}><SettingsApplicationsIcon/></Button>
                 <Button onClick={() => dispatch(removeGalleryRequest(g.id))}><DeleteIcon/></Button>
                 <Button component={RouterLink} to={`/gallery/${g.galleryCode}`}><ArrowForwardIcon/></Button>

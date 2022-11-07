@@ -3,6 +3,7 @@ import { makeStyles} from '@mui/styles';
 import ReactPlayer from 'react-player'
 import './responsive.css';
 import DeleteIcon from '@mui/icons-material/Delete';
+import {BASE_URL_FILE} from "../../config";
 
 const useStyles = makeStyles({
     card: {
@@ -22,9 +23,9 @@ const GalleryItem = ({name, setId, id,  user, removeHandler, fileName}) => {
     if (typeof fileName !== 'undefined') {
       const format = fileName.split('.');
       if(format[1] === 'mp4'){
-         video = 'https://sferakg.ru/file/' + fileName;
+         video = BASE_URL_FILE + fileName;
       }else{
-        image ='https://sferakg.ru/file/' + fileName;
+        image = BASE_URL_FILE + fileName;
       }
     }
 

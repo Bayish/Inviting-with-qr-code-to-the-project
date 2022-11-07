@@ -7,6 +7,7 @@ import {fetchGalleryRequest, removePhotoRequest} from "../../../store/actions/ga
 import Modal from "../../../components/UI/Modal/Modal";
 import ReactPlayer from "react-player";
 import '../../../components/GalleryItem/responsive.css';
+import {BASE_URL_FILE} from "../../../config";
 
 const useStyles = makeStyles(theme => ({
   title: {
@@ -88,13 +89,13 @@ const Main = ({match}) => {
                 <Modal show={id !== 0} close={purchaseCloseHandler}>
                       {!video && image ? (
                         <div >
-                          <img style={{width: '100%', height: 'auto', maxWidth: '700px'}} src={'https://sferakg.ru/file/' + image} alt="galleryPhoto"/>
+                          <img style={{width: '100%', height: 'auto', maxWidth: '700px'}} src={BASE_URL_FILE + image} alt="galleryPhoto"/>
                         </div>
                       ) : (
                         <div className='player-wrapper'>
                           <ReactPlayer
                             className='react-player'
-                            url={'https://sferakg.ru/file/' + video}
+                            url={BASE_URL_FILE + video}
                             width='100%'
                             height='100%'
                             controls={true}
